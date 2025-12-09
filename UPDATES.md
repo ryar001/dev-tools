@@ -1,3 +1,6 @@
+Configuration:
+- pyproject.toml: Added configuration for `setuptools` to find packages within the `src` directory.
+
 What's New
 - pyproject.toml: Updated project version to 0.1.3.
 

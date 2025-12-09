@@ -19,7 +19,9 @@ dev-mcp = "dev_mcp.main:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["dev_mcp", "tools"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.package-data]
 tools = ["ai-tracker.sh"]
