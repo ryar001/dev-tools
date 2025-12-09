@@ -1,3 +1,10 @@
+What's New
+- src/dev_mcp/main.py:
+  - Added import for `typing` module.
+  - Implemented automatic population of `argparse` choices for parameters with `typing.Literal` and `Optional[typing.Literal]` type hints.
+  - Updated type hint for `version_bump` parameter to `Optional[Literal["major", "minor", "patch", "none"]]`.
+  - Clarified description for `version_bump` parameter.
+
 What's New:
   pyproject.toml:
     - Updated project version from "0.4.0" to "0.4.1".

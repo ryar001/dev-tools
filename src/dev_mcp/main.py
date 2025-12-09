@@ -6,6 +6,7 @@ import argparse
 import importlib.resources
 from fastmcp import FastMCP
 import inspect
+import typing
 
 # Initialize a standalone MCP server for development tools
 mcp = FastMCP("Dev Tools")
@@ -63,7 +64,7 @@ async def _run_script(script_path: str, args: list[str], cwd: Path) -> str:
 
 async def _run_ai_tracker_impl(
     force: bool = False,
-    version_bump: Literal["major", "minor", "patch", "none"] = "patch",
+    version_bump: Optional[Literal["major", "minor", "patch", "none"]] = None,
     commit_hash: Optional[str] = None,
 ) -> str:
     """
@@ -96,7 +97,7 @@ async def _run_ai_tracker_impl(
 @mcp.tool()
 async def run_ai_tracker(
     force: bool = False,
-    version_bump: Literal["major", "minor", "patch", "none"] = "patch",
+    version_bump: Optional[Literal["major", "minor", "patch", "none"]] = None,
     commit_hash: Optional[str] = None,
 ) -> str:
     """
@@ -104,7 +105,7 @@ async def run_ai_tracker(
 
     Args:
         force: Ignore AI-detected errors and proceed with commit (default: False).
-        version_bump: How to bump the version (default: "patch").
+        version_bump: How to bump the version. If not provided, AI will determine the bump.
         commit_hash: Optional commit hash to generate diff from.
     """
     return await _run_ai_tracker_impl(
@@ -138,9 +139,20 @@ def main():
 
                 annotation = param.annotation
                 origin = getattr(annotation, "__origin__", None)
+                ann_args = getattr(annotation, "__args__", [])
 
                 if origin is Literal:
-                    kwargs["choices"] = annotation.__args__
+                    kwargs["choices"] = ann_args
+                elif (
+                    origin is typing.Union
+                    and len(ann_args) == 2
+                    and type(None) in ann_args
+                ):
+                    literal_type = (
+                        ann_args[0] if ann_args[1] is type(None) else ann_args[1]
+                    )
+                    if getattr(literal_type, "__origin__", None) is Literal:
+                        kwargs["choices"] = getattr(literal_type, "__args__", [])
 
                 if annotation is bool and param.default is False:
                     kwargs["action"] = "store_true"
