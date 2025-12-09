@@ -1,3 +1,11 @@
+What's New (2025-12-09)
+  src/dev_mcp/main.py
+    main: Implemented default MCP server mode activation when main.py is executed without command-line arguments.
+    _run_ai_tracker_impl: Added support for force, commit_hash, and version_bump arguments to be passed to ai-tracker.sh.
+Refactor
+  src/dev_mcp/main.py
+    _run_ai_tracker_impl: Refined script location logic to robustly find ai-tracker.sh in both development (relative path) and installed (package resources) environments. Ensured execution from the project root (cwd=Path.cwd()).
+
 ### Dependency Update
 - `uv.lock`: Updated `uv.lock` to version `0.5.2`.
 

@@ -71,27 +71,42 @@ async def _run_ai_tracker_impl(
     Core implementation for running the ai-tracker.sh script.
     """
     tool_name = "ai-tracker.sh"
-    with importlib.resources.as_file(
-        importlib.resources.files("tools").joinpath(tool_name)
-    ) as script_path:
-        # Construct command arguments
-        args = []
 
-        if force:
-            args.append("force")
+    # Construct command arguments
+    args = []
 
-        if commit_hash:
-            args.extend(["-r", commit_hash])
+    if force:
+        args.append("force")
 
-        if version_bump:
-            args.extend(["-v", version_bump])
+    if commit_hash:
+        args.extend(["-r", commit_hash])
 
+    if version_bump:
+        args.extend(["-v", version_bump])
+    
+    # 1. Try finding the script relative to this file (Development Mode)
+    # Assumes structure: src/dev_mcp/main.py -> src/tools/ai-tracker.sh
+    dev_path = Path(__file__).parent.parent / "tools" / tool_name
+    if dev_path.exists():
         return await _run_script(
-            script_path=str(script_path),
+            script_path=str(dev_path),
             args=args,
-            # We need to run this in the project root
             cwd=Path.cwd(),
         )
+
+    # 2. Fallback to installed package resources (Production/Installed Mode)
+    try:
+        with importlib.resources.as_file(
+            importlib.resources.files("tools").joinpath(tool_name)
+        ) as script_path:
+            return await _run_script(
+                script_path=str(script_path),
+                args=args,
+                # We need to run this in the project root
+                cwd=Path.cwd(),
+            )
+    except Exception as e:
+        return f"Error locating tool script: {e}"
 
 
 @mcp.tool()
@@ -116,6 +131,11 @@ async def run_ai_tracker(
 def main():
     """Run a dev tool from the command line."""
     import sys
+
+    # If run with no arguments, assume MCP server mode (stdio)
+    if len(sys.argv) == 1:
+        mcp.run(transport="stdio")
+        return
 
     if "--mcp-port" in sys.argv:
         mcp.serve()
