@@ -1,3 +1,6 @@
+What's New
+- pyproject.toml: Updated project version to 0.1.3.
+
 Refactor:
 - dev_mcp.py: Deleted legacy script.
 
