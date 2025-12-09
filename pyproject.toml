@@ -1,6 +1,10 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "dev-mcp"
-version = "0.1.0"
+version = "0.1.2"
 description = "A command-line tool to run the ai-tracker.sh script."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -11,4 +15,11 @@ dependencies = [
 ]
 
 [project.scripts]
-dev-mcp = "dev_mcp:main"
+dev-mcp = "dev_mcp.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["dev_mcp", "tools"]
+
+[tool.setuptools.package-data]
+tools = ["ai-tracker.sh"]

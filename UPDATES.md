@@ -1,3 +1,13 @@
+Refactor:
+- dev_mcp.py: Deleted legacy script.
+
+What's New:
+- pyproject.toml:
+  - Configured project build system with setuptools.
+  - Updated project version to 0.1.2.
+  - Defined 'dev-mcp' console script entry point.
+  - Included 'ai-tracker.sh' as package data.
+
 New Features:
 - `__version__.py`: Initial version file added.
 - `dev_mcp.py`:
