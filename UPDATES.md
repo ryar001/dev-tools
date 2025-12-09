@@ -1,3 +1,14 @@
+Refactor:
+  tests/tools/test_ai_tracker.py
+    - Added comprehensive unit tests for the `ai-tracker.sh` script.
+    - Tests cover:
+        - Git repository detection and error handling.
+        - Graceful exit when no staged changes are present.
+        - Basic version bumping (patch, major) to `__version__.py`.
+        - Updating `pyproject.toml` for version and preserving formatting.
+        - `ruff` linter integration, including failure handling with and without `--force`.
+        - Mocking of external dependencies (`gemini`, `ruff`) and git environment for isolated testing.
+
 Docs:
   README.md:
     - Added comprehensive documentation for Dev Tools MCP Server, including features (ai-tracker.sh), installation instructions, MCP server configuration, run_ai_tracker tool arguments, and development setup.

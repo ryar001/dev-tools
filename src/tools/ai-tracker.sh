@@ -225,7 +225,7 @@ ${ESCAPED_DIFF}
 "
 
 # --- Generate summary and commit message with Gemini ---
-AI_OUTPUT=$(printf "%s" "$GEMINI_PROMPT" | gemini -m gemini-2.5-flash) || {
+AI_OUTPUT=$(printf "%s" "$GEMINI_PROMPT" | gemini --model gemini-2.5-flash-lite) || {
     echo "Error: Gemini command failed. Please check its configuration and the error messages above." >&2
     exit 1
 }
@@ -289,6 +289,16 @@ if [ "$VERSION_BUMP" != "none" ]; then
     echo "__version__ = \"$NEW_VERSION\"" > "$VERSION_FILE"
     git add "$VERSION_FILE"
     echo "✅ Updated __version__.py to $NEW_VERSION"
+
+    # Update pyproject.toml if it exists
+    PYPROJECT_FILE="$GIT_ROOT/pyproject.toml"
+    if [ -f "$PYPROJECT_FILE" ]; then
+        # Use a temporary file to avoid sed -i compatibility issues across platforms
+        # Regex handles optional whitespace indentation and preserves it
+        sed "s/^\([[:space:]]*\)version = \".*\"/\1version = \"$NEW_VERSION\"/" "$PYPROJECT_FILE" > "$PYPROJECT_FILE.tmp" && mv "$PYPROJECT_FILE.tmp" "$PYPROJECT_FILE"
+        git add "$PYPROJECT_FILE"
+        echo "✅ Updated pyproject.toml to $NEW_VERSION"
+    fi
 fi
 
 # Add the updated UPDATES.md to staged files
