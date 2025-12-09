@@ -1,3 +1,20 @@
+2025-12-09
+
+What's New
+- AGENT.md: Added AI Coding Assistant Instructions.
+- src/dev_mcp/main.py:
+  - Introduced main CLI entry point for dev_mcp tools.
+  - Implemented `_run_script` for executing shell scripts, handling permissions and environment.
+  - Integrated `ai-tracker.sh` as a `mcp.tool()` via `run_ai_tracker` with arguments for force, version bump, and commit hash.
+  - Implemented dynamic argparse for CLI tools.
+
+Refactor
+- .gitignore: Added ignore patterns for `.env` files and all dot files (`.*`).
+
+Chore
+- pyproject.toml: Updated project version to 0.1.4.
+- uv.lock: Added new dependency lock file.
+
 Configuration:
 - pyproject.toml: Added configuration for `setuptools` to find packages within the `src` directory.
 
