@@ -1,3 +1,13 @@
+Docs:
+  README.md:
+    - Added comprehensive documentation for Dev Tools MCP Server, including features (ai-tracker.sh), installation instructions, MCP server configuration, run_ai_tracker tool arguments, and development setup.
+Tests:
+  tests/dev_mcp/test_main.py:
+    - Added unit tests for the `run_ai_tracker` command, covering CLI and `uvx` execution with `--help` and basic execution checks.
+Build:
+  pyproject.toml:
+    - Updated project version from 0.0.1 to 0.6.0.
+
 What's New (2025-12-09)
   src/dev_mcp/main.py
     main: Implemented default MCP server mode activation when main.py is executed without command-line arguments.
