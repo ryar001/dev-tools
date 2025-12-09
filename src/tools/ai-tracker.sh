@@ -140,10 +140,10 @@ git add -u
 # First, check if we're using staged diff or commit range diff
 if [[ "$DIFF_COMMAND" == "git diff --staged" ]]; then
     # For staged diff, exclude ai-tracker.sh using pathspec
-    DIFF=$(git diff --staged -- . ':(exclude)ai-tracker.sh' ':(exclude)**/ai-tracker.sh' | grep -E '^(\+\+\+|---|\+|@@)' | grep -v '^[+ ]*$' | grep -v '^-*$')
+    DIFF=$(git diff --staged -- . ':(exclude)ai-tracker.sh' ':(exclude)**/ai-tracker.sh' | grep -E '^(\+\+\+|---|\+|@@)' | grep -v '^[+ ]*$' | grep -v '^-*$' || true)
 else
     # For commit range diff, filter out ai-tracker.sh from the output
-    DIFF=$(eval "$DIFF_COMMAND" | grep -v 'ai-tracker\.sh' | grep -E '^(\+\+\+|---|\+|@@)' | grep -v '^[+ ]*$' | grep -v '^-*$')
+    DIFF=$(eval "$DIFF_COMMAND" | grep -v 'ai-tracker\.sh' | grep -E '^(\+\+\+|---|\+|@@)' | grep -v '^[+ ]*$' | grep -v '^-*$' || true)
 fi
 
 if [[ -z "$DIFF" ]]; then
