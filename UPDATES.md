@@ -1,3 +1,6 @@
+### Dependency Update
+- `uv.lock`: Updated `uv.lock` to version `0.5.2`.
+
 What's New:
 - pyproject.toml: Updated project version to 0.5.2.
 
