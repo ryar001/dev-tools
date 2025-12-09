@@ -1,4 +1,7 @@
 What's New:
+- pyproject.toml: Updated project version to 0.5.2.
+
+What's New:
 - src/dev_mcp/main.py: Added logic to conditionally start the `mcp` server when `--mcp-port` argument is present.
 
 Warnings:
