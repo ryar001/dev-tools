@@ -73,6 +73,7 @@ UPDATES_FILE="$GIT_ROOT/UPDATES.md"
 # Default values
 DIFF_COMMAND="git diff --staged"
 VERSION_BUMP="patch"  # Default to patch increment
+VERSION_BUMP_SET_BY_USER=false
 
 # Parse arguments
 while getopts ":r:v:" opt; do
@@ -81,6 +82,7 @@ while getopts ":r:v:" opt; do
       DIFF_COMMAND="git diff ${OPTARG}..HEAD"
       ;;
     v)
+      VERSION_BUMP_SET_BY_USER=true
       VERSION_BUMP="${OPTARG}"
       if [[ ! "$VERSION_BUMP" =~ ^(major|minor|patch|none)$ ]]; then
         echo "Error: Invalid version bump type: ${OPTARG}" >&2
@@ -233,8 +235,8 @@ if [ -z "$SUMMARY" ] || [ -z "$COMMIT_MSG" ]; then
     exit 1
 fi
 
-# Auto-detect version bump type if not specified and not none
-if [ "$VERSION_BUMP" = "patch" ] && [ "$1" != "-v" ]; then
+# Auto-detect version bump type if not specified or is 'none'
+if ! ${VERSION_BUMP_SET_BY_USER} || [ "$VERSION_BUMP" = "none" ]; then
     # Check summary for keywords to suggest version bump
     if echo "$SUMMARY" | grep -qiE "breaking change|breaking:|incompatible|major change"; then
         echo "🔍 Detected breaking changes in commit. Suggesting MAJOR version bump."
@@ -246,6 +248,7 @@ if [ "$VERSION_BUMP" = "patch" ] && [ "$1" != "-v" ]; then
         VERSION_BUMP="minor"
     else
         echo "🔍 Detected bug fixes/refactoring. Using PATCH version bump."
+        VERSION_BUMP="patch"
     fi
     
     # Recalculate new version with detected bump type

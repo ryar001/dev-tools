@@ -1,7 +1,14 @@
 [project]
-name = "dev-tools"
+name = "dev-mcp"
 version = "0.1.0"
-description = "Add your description here"
+description = "A command-line tool to run the ai-tracker.sh script."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastmcp",
+    "pip>=25.3",
+    "ruff",
+]
+
+[project.scripts]
+dev-mcp = "dev_mcp:main"
