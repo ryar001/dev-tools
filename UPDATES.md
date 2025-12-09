@@ -1,3 +1,10 @@
+Warnings:
+  No breakpoints detected.
+
+What's New:
+  - pyproject.toml:
+    - Project version updated to 0.5.1.
+
 What's New
 - src/dev_mcp/main.py:
   - Added import for `typing` module.
