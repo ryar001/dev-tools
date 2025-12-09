@@ -115,6 +115,11 @@ async def run_ai_tracker(
 
 def main():
     """Run a dev tool from the command line."""
+    import sys
+
+    if "--mcp-port" in sys.argv:
+        mcp.serve()
+        return
 
     async def async_main():
         parser = argparse.ArgumentParser(description="Run a dev tool.")

@@ -1,3 +1,6 @@
+What's New:
+- src/dev_mcp/main.py: Added logic to conditionally start the `mcp` server when `--mcp-port` argument is present.
+
 Warnings:
   No breakpoints detected.
 
