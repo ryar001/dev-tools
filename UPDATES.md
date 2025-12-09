@@ -1,3 +1,7 @@
+What's New:
+  pyproject.toml:
+    - Updated project version from "0.4.0" to "0.4.1".
+
 2025-12-09
 
 What's New

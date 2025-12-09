@@ -14,6 +14,13 @@
 set -e
 set -o pipefail
 
+# Check for gemini CLI
+if ! command -v gemini &> /dev/null; then
+    echo "Error: The 'gemini' command-line tool is not installed or not in your PATH." >&2
+    echo "This script requires the Gemini CLI. Please install it to continue." >&2
+    exit 1
+fi
+
 FORCE_MODE=false
 if [ "$1" = "force" ]; then
     FORCE_MODE=true
