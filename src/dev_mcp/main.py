@@ -63,14 +63,27 @@ async def _run_script(script_path: str, args: list[str], cwd: Path) -> str:
 
 
 async def _run_ai_tracker_impl(
+    path: str,
     force: bool = False,
     version_bump: Optional[Literal["major", "minor", "patch", "none"]] = None,
     commit_hash: Optional[str] = None,
 ) -> str:
     """
     Core implementation for running the ai-tracker.sh script.
+
+    Args:
+        path: str: Absolute path to the project root(must have git).
+        force: Optional[bool]: Ignore AI-detected errors and proceed with commit (default: False).
+        version_bump: Optional[Literal["major", "minor", "patch", "none"]] How to bump the version. If not provided, AI will determine the bump.
+        commit_hash: Optional[str]: Optional commit hash to generate diff from.
     """
     tool_name = "ai-tracker.sh"
+
+    # Determine working directory
+    cwd = Path(path)
+    
+    if not cwd.exists():
+        return f"Error: The specified path '{cwd}' does not exist."
 
     # Construct command arguments
     args = []
@@ -85,14 +98,13 @@ async def _run_ai_tracker_impl(
         args.extend(["-v", version_bump])
     
     # 1. Try finding the script relative to this file (Development Mode)
-    # 1. Try finding the script relative to this file (Development Mode)
     # Assumes structure: src/dev_mcp/main.py -> src/dev_mcp/tools/ai-tracker.sh
     dev_path = Path(__file__).parent / "tools" / tool_name
     if dev_path.exists():
         return await _run_script(
             script_path=str(dev_path),
             args=args,
-            cwd=Path.cwd(),
+            cwd=cwd,
         )
 
     # 2. Fallback to installed package resources (Production/Installed Mode)
@@ -103,8 +115,8 @@ async def _run_ai_tracker_impl(
             return await _run_script(
                 script_path=str(script_path),
                 args=args,
-                # We need to run this in the project root
-                cwd=Path.cwd(),
+                # Run in the specified project root
+                cwd=cwd,
             )
     except Exception as e:
         return f"Error locating tool script: {e}"
@@ -112,6 +124,7 @@ async def _run_ai_tracker_impl(
 
 @mcp.tool()
 async def run_ai_tracker(
+    path: str,
     force: bool = False,
     version_bump: Optional[Literal["major", "minor", "patch", "none"]] = None,
     commit_hash: Optional[str] = None,
@@ -120,12 +133,16 @@ async def run_ai_tracker(
     Run the ai-tracker.sh script to track changes, generate AI summaries, and commit.
 
     Args:
+        path: Absolute path to the project root.
         force: Ignore AI-detected errors and proceed with commit (default: False).
         version_bump: How to bump the version. If not provided, AI will determine the bump.
         commit_hash: Optional commit hash to generate diff from.
     """
     return await _run_ai_tracker_impl(
-        force=force, version_bump=version_bump, commit_hash=commit_hash
+        path=path,
+        force=force, 
+        version_bump=version_bump, 
+        commit_hash=commit_hash,
     )
 
 

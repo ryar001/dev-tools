@@ -1,3 +1,12 @@
+What's New (2025-12-10):
+  `src/dev_mcp/main.py`:
+    - Enhanced `run_ai_tracker` to accept `path`, `force`, `version_bump`, and `commit_hash` parameters.
+    - The `path` parameter allows specifying the project's root directory, which is used as the working directory for git operations.
+    - Added `force` option to bypass AI-detected errors during commits.
+    - Added `version_bump` parameter for controlling version increment strategy (major, minor, patch, none).
+    - Added `commit_hash` parameter for generating diffs against a specified commit.
+    - Updated docstrings to reflect the new parameters and functionality.
+
 Warnings:
 - No breakpoints found.
 
