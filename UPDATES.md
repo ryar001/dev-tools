@@ -1,3 +1,10 @@
+Warnings:
+- No breakpoints found.
+
+What's New:
+- src/dev_mcp/tools/ai-tracker.sh:
+  - A new bash script `ai-tracker.sh` has been added. This script automates the process of tracking changes, updating `UPDATES.md`, and generating conventional git commit messages. It integrates with the Gemini CLI for AI-driven summarization and commit message generation. The script includes functionality for version bumping (major, minor, patch, or none) and can optionally force commits even if AI-detected errors occur. It also checks for Python syntax errors using `ruff` before committing and updates `__version__.py` and `pyproject.toml` if a version bump is performed.
+
 Refactor
 *   src/dev_mcp/main.py:
     *   Enhanced path resolution for `ai-tracker.sh` to support development mode and added explanatory comments.
