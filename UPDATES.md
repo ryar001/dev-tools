@@ -1,3 +1,23 @@
+Date: 2025-12-10
+Warnings:
+- No breakpoints found.
+What's New:
+- src/dev_mcp/main.py:
+  - Added 'path', 'force', 'version_bump', 'commit_hash' parameters to run_ai_tracker and _run_ai_tracker_impl for specifying project root and commit details.
+  - Added check for project root existence.
+  - Explicitly set working directory to provided project path.
+
+Date: 2025-12-10
+
+Warnings:
+- No breakpoints found.
+
+What's New:
+- src/dev_mcp/main.py:
+  - Added 'path', 'force', 'version_bump', 'commit_hash' parameters to run_ai_tracker and _run_ai_tracker_impl for specifying project root and commit details.
+  - Added check for project root existence.
+  - Explicitly set working directory to provided project path.
+
 What's New (2025-12-10):
   `src/dev_mcp/main.py`:
     - Enhanced `run_ai_tracker` to accept `path`, `force`, `version_bump`, and `commit_hash` parameters.
