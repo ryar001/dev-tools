@@ -1,3 +1,10 @@
+What's New
+  README.md
+    - Added a new section detailing the \`run_ai_tracker\` tool.
+    - The \`run_ai_tracker\` is described as an "intelligent autopilot for your git workflow."
+    - Documentation includes the tool's workflow (safety checks, AI analysis, changelog generation, auto-versioning, commit & tag).
+    - Arguments for \`run_ai_tracker\` (\`path\`, \`force\`, \`version_bump\`, \`commit_hash\`) are documented.
+
 Date: 2025-12-10
 Warnings:
 - No breakpoints found.

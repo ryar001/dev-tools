@@ -41,19 +41,27 @@ To use this with your LLM, you need to add it to your MCP configuration file.
 
 ## Tools
 
-### `run_ai_tracker`
+### 🤖 `run_ai_tracker`
 
-Runs the implementation of the AI Tracker script which:
-1.  Checks for git changes.
-2.  Generates a summary of changes.
-3.  Updates `UPDATES.md`.
-4.  Bumps the version (patch by default, or major/minor if specified).
-5.  Commits and tags the release.
+**The intelligent autopilot for your git workflow.**
 
-**Arguments:**
-- `force` (bool): Ignore AI-detected errors and force commit. (Default: `False`)
-- `version_bump` (string): 'major', 'minor', 'patch', or 'none'. (Default: `None` - AI determines bump)
-- `commit_hash` (string): Optional specific commit hash to process. (Default: `None`)
+Stop manually writing changelogs and commit messages. This tool analyzes your code changes to handle the entire release process for you.
+
+#### Workflow
+1.  **🔍 Safety First**: Scans your Python files with `ruff` to catch syntax errors before committing.
+2.  **🧠 AI Analysis**: Uses Gemini to analyze your `git diff`, understanding context and intent.
+3.  **📝 Smart Summaries**: Automatically generates a categorized changelog and prepends it to `UPDATES.md`(will create if not exists).
+4.  **🏷️ Auto-Versioning**: Intelligently determines the semantic version bump (Major, Minor, Patch) based on the nature of your changes.
+5.  **💾 Commit & Tag**: Commits with a Conventional Commit message and creates a git tag (e.g., `v1.2.3`).
+
+
+#### Arguments
+| Argument | Type | Description | Default |
+|----------|------|-------------|---------|
+| `path` | `str` | Absolute path to your project root. | **Required** |
+| `force` | `bool` | Bypass safety checks (e.g., ruff errors) and force the commit. | `False` |
+| `version_bump` | `str` | Manually specify the version bump (`major`, `minor`, `patch`, `none`). If omitted, the AI decides. | `None` |
+| `commit_hash` | `str` | Generate the diff from a specific commit hash instead of staged changes. | `None` |
 
 ## Development
 
@@ -62,5 +70,5 @@ Runs the implementation of the AI Tracker script which:
 uv sync
 
 # Run locally for testing
-uv run dev-mcp --help
+uvx dev-mcp --help
 ```
