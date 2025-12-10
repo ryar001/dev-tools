@@ -85,8 +85,9 @@ async def _run_ai_tracker_impl(
         args.extend(["-v", version_bump])
     
     # 1. Try finding the script relative to this file (Development Mode)
-    # Assumes structure: src/dev_mcp/main.py -> src/tools/ai-tracker.sh
-    dev_path = Path(__file__).parent.parent / "tools" / tool_name
+    # 1. Try finding the script relative to this file (Development Mode)
+    # Assumes structure: src/dev_mcp/main.py -> src/dev_mcp/tools/ai-tracker.sh
+    dev_path = Path(__file__).parent / "tools" / tool_name
     if dev_path.exists():
         return await _run_script(
             script_path=str(dev_path),
@@ -97,7 +98,7 @@ async def _run_ai_tracker_impl(
     # 2. Fallback to installed package resources (Production/Installed Mode)
     try:
         with importlib.resources.as_file(
-            importlib.resources.files("tools").joinpath(tool_name)
+            importlib.resources.files("dev_mcp.tools").joinpath(tool_name)
         ) as script_path:
             return await _run_script(
                 script_path=str(script_path),

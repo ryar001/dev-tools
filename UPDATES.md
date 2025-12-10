@@ -1,3 +1,12 @@
+Refactor
+*   src/dev_mcp/main.py:
+    *   Enhanced path resolution for `ai-tracker.sh` to support development mode and added explanatory comments.
+
+Chore
+*   pyproject.toml:
+    *   Updated project version to `0.7.2`.
+    *   Included `tools/ai-tracker.sh` in development configurations.
+
 Refactor:
   tests/tools/test_ai_tracker.py
     - Added comprehensive unit tests for the `ai-tracker.sh` script.
